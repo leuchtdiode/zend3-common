@@ -1,27 +1,28 @@
 {
-	name: "leuchtdiode/zend3-common",
-	description: "Zend Framework 3 module for common classes",
-	type: "library",
-	license: "MIT",
-	homepage: "https://try2catch.com",
-	authors: [
+	"name": "leuchtdiode/zend3-common",
+	"description": "Zend Framework 3 module for common classes",
+	"type": "library",
+	"license": "MIT",
+	"homepage": "https://try2catch.com",
+	"authors": [
 		{
-			name: "Alex Schloegl",
-			email: "alex@try2catch.com",
-			homepage: "https://try2catch.com",
-			role: "Developer"
+			"name": "Alex Schloegl",
+			"email": "alex@try2catch.com",
+			"homepage": "https://try2catch.com",
+			"role": "Developer"
 		}
 	],
-	keywords: [
+	"keywords": [
 		"Zend Framework 3",
 		"Module"
 	],
-	require: {
-		php: ">=7.1"
+	"require": {
+		"php": ">=7.1",
+		"zendframework/zend-servicemanager": "^3.0"
 	},
-	autoload: {
-		psr-4: {
-			Common\: "src/"
+	"autoload": {
+		"psr-4": {
+			"Common\\": "src/"
 		}
 	}
 }

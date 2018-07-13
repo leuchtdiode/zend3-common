@@ -32,11 +32,6 @@ class HttpRouteCreator
 	private $childRoutes;
 
 	/**
-	 * @var bool
-	 */
-	private $addToSitemap = false;
-
-	/**
 	 * @return HttpRouteCreator
 	 */
 	public static function create()
@@ -100,17 +95,6 @@ class HttpRouteCreator
 	}
 
 	/**
-	 * @param bool $addToSitemap
-	 * @return HttpRouteCreator
-	 */
-	public function setAddToSitemap(bool $addToSitemap): HttpRouteCreator
-	{
-		$this->addToSitemap = $addToSitemap;
-
-		return $this;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getConfig()
@@ -125,7 +109,6 @@ class HttpRouteCreator
 					'action'		=> 'execute',
 				],
 				'constraints'		=> $this->constraints,
-				'add_to_sitemap'	=> $this->addToSitemap,
 			],
 			'child_routes'	=> $this->childRoutes
 		];

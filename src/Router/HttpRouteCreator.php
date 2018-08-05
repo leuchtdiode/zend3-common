@@ -2,6 +2,7 @@
 namespace Common\Router;
 
 use Zend\Router\Http\Literal;
+use Zend\Router\Http\Method;
 use Zend\Router\Http\Segment;
 
 class HttpRouteCreator
@@ -30,6 +31,11 @@ class HttpRouteCreator
 	 * @var array
 	 */
 	private $childRoutes;
+
+	/**
+	 * @var array
+	 */
+	private $methods = [];
 
 	/**
 	 * @return HttpRouteCreator
@@ -95,15 +101,39 @@ class HttpRouteCreator
 	}
 
 	/**
+	 * @param array $methods
+	 * @return HttpRouteCreator
+	 */
+	public function setMethods(array $methods): HttpRouteCreator
+	{
+		$this->methods = $methods;
+
+		return $this;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getConfig()
 	{
+		$type = Literal::class;
+
+		if ($this->constraints)
+		{
+			$type = Segment::class;
+		}
+
+		if ($this->methods)
+		{
+			$type = Method::class;
+		}
+
 		return [
-			'type'			=> $this->constraints ? Segment::class : Literal::class,
+			'type'			=> $type,
 			'may_terminate'	=> $this->mayTerminate,
 			'options'	=> [
 				'route'		=> $this->route,
+				'verb'		=> implode(',', $this->methods),
 				'defaults'	=> [
 					'controller'	=> $this->action,
 					'action'		=> 'execute',

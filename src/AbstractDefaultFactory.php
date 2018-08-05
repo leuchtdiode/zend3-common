@@ -77,7 +77,11 @@ abstract class AbstractDefaultFactory implements AbstractFactoryInterface
 
 		foreach($params as $p)
 		{
-			if($p->getClass())
+			if($p->getName() === 'container')
+			{
+				$parameterInstances[] = $this->container;
+			}
+			else if($p->getClass())
 			{
 				try
 				{

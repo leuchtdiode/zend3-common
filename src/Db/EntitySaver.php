@@ -9,7 +9,7 @@ class EntitySaver
 	/**
 	 * @var EntityManager
 	 */
-	private $entityManager;
+	protected $entityManager;
 
 	/**
 	 * @param EntityManager $entityManager
@@ -19,15 +19,44 @@ class EntitySaver
 		$this->entityManager = $entityManager;
 	}
 
-	public function save($entity)
+	/**
+	 * @param $entity
+	 * @param bool $flush
+	 * @return bool
+	 */
+	public function save($entity, $flush = true)
 	{
 		try
 		{
 			$this->entityManager->persist($entity);
+
+			if ($flush)
+			{
+				$this->entityManager->flush();
+			}
+
+			return true;
+		}
+		catch (Exception $ex)
+		{
+			error_log($ex->getMessage());
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function flush()
+	{
+		try
+		{
 			$this->entityManager->flush();
 
 			return true;
 		}
+
 		catch (Exception $ex)
 		{
 			error_log($ex->getMessage());

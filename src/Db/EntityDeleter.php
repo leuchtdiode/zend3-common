@@ -9,7 +9,7 @@ class EntityDeleter
 	/**
 	 * @var EntityManager
 	 */
-	private $entityManager;
+	protected $entityManager;
 
 	/**
 	 * @param EntityManager $entityManager

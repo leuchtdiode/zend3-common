@@ -22,6 +22,13 @@ abstract class PropertyDefinition
 	protected $validatorChain;
 
 	/**
+	 */
+	public function __construct()
+	{
+		$this->validatorChain = new ValidatorChain();
+	}
+
+	/**
 	 * @param ValidatorInterface $validator
 	 */
 	public function addValidator(ValidatorInterface $validator)

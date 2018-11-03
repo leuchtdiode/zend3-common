@@ -34,7 +34,7 @@ abstract class Data
 		{
 			if (($content = $request->getContent()))
 			{
-				$this->data = json_decode($content);
+				$this->data = json_decode($content, JSON_OBJECT_AS_ARRAY);
 			}
 		}
 

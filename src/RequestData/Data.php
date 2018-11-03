@@ -32,7 +32,10 @@ abstract class Data
 		}
 		else
 		{
-			// TODO from content or form data
+			if (($content = $request->getContent()))
+			{
+				$this->data = json_decode($content);
+			}
 		}
 
 		return $this;

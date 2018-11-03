@@ -54,6 +54,7 @@ abstract class Data
 
 			$value = new Value();
 			$value->setName($definition->getName());
+			$value->setValue($rawValue);
 
 			$values->addValue($value);
 

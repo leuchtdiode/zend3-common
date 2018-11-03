@@ -19,6 +19,23 @@ class Values
 	}
 
 	/**
+	 * @param string $name
+	 * @return Value|null
+	 */
+	public function get($name)
+	{
+		foreach ($this->values as $value)
+		{
+			if ($value->getName() === $name)
+			{
+				return $value;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * @return Error[]
 	 */
 	public function getErrors()

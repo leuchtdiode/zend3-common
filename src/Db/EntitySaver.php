@@ -32,7 +32,7 @@ class EntitySaver
 
 			if ($flush)
 			{
-				$this->entityManager->flush();
+				$this->entityManager->flush($entity);
 			}
 
 			return true;

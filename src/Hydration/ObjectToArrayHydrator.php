@@ -46,7 +46,7 @@ class ObjectToArrayHydrator
 	{
 		if($object instanceof DateTime)
 		{
-			return $object->format('Y-m-d H:i:s');
+			return $object->format('c');
 		}
 
 		if(!$object instanceof ArrayHydratable)

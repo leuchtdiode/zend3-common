@@ -35,8 +35,6 @@ class ObjectToArrayHydrator
 
 			throw $ex;
 		}
-
-		return [];
 	}
 
 	/**

@@ -19,20 +19,13 @@ class EntityDeleter
 		$this->entityManager = $entityManager;
 	}
 
+	/**
+	 * @param $entity
+	 * @throws Exception
+	 */
 	public function delete($entity)
 	{
-		try
-		{
-			$this->entityManager->remove($entity);
-			$this->entityManager->flush();
-
-			return true;
-		}
-		catch (Exception $ex)
-		{
-			error_log($ex->getMessage());
-		}
-
-		return false;
+		$this->entityManager->remove($entity);
+		$this->entityManager->flush($entity);
 	}
 }

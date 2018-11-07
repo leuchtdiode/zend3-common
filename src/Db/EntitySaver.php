@@ -22,46 +22,23 @@ class EntitySaver
 	/**
 	 * @param $entity
 	 * @param bool $flush
-	 * @return bool
+	 * @throws Exception
 	 */
 	public function save($entity, $flush = true)
 	{
-		try
+		$this->entityManager->persist($entity);
+
+		if ($flush)
 		{
-			$this->entityManager->persist($entity);
-
-			if ($flush)
-			{
-				$this->entityManager->flush($entity);
-			}
-
-			return true;
+			$this->entityManager->flush($entity);
 		}
-		catch (Exception $ex)
-		{
-			error_log($ex->getMessage());
-		}
-
-		return false;
 	}
 
 	/**
-	 * @return bool
+	 * @throws Exception
 	 */
 	public function flush()
 	{
-		try
-		{
-			$this->entityManager->flush();
-
-			return true;
-		}
-
-		catch (Exception $ex)
-		{
-			error_log($ex->getMessage());
-		}
-
-		return false;
+		$this->entityManager->flush();
 	}
 }

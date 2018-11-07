@@ -16,6 +16,7 @@ class ObjectToArrayHydrator
 	/**
 	 * @param $arrayOrObject
 	 * @return array
+	 * @throws Exception
 	 */
 	public static function hydrate($arrayOrObject)
 	{
@@ -31,6 +32,8 @@ class ObjectToArrayHydrator
 		catch (Exception $ex)
 		{
 			error_log($ex->getMessage());
+
+			throw $ex;
 		}
 
 		return [];

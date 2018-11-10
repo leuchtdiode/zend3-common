@@ -44,7 +44,7 @@ abstract class Equals implements Filter
 	public function addClause(QueryBuilder $queryBuilder)
 	{
 		$queryBuilder
-			->where($this->getField() . ' = :' . $this->getParameterName())
+			->andWhere($this->getField() . ' = :' . $this->getParameterName())
 			->setParameter($this->getParameterName(), $this->parameter);
 	}
 }

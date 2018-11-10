@@ -1,6 +1,8 @@
 <?php
 namespace Common;
 
+use Common\Action\Plugin\Config as ConfigActionPlugin;
+use Common\Action\Plugin\ConfigFactory as ConfigActionPluginFactory;
 use Common\View\Helper\AbsoluteUrl;
 use Common\View\Helper\AbsoluteUrlFactory;
 use Common\View\Helper\StaticResource;
@@ -16,6 +18,15 @@ return [
 		'aliases'   => [
 			'staticResource' => StaticResource::class,
 			'absoluteUrl'    => AbsoluteUrl::class,
+		],
+	],
+
+	'controller_plugins' => [
+		'factories' => [
+			ConfigActionPlugin::class => ConfigActionPluginFactory::class
+		],
+		'aliases' => [
+			'config' => ConfigActionPlugin::class
 		],
 	],
 

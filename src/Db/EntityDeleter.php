@@ -33,28 +33,4 @@ class EntityDeleter
 			$this->entityManager->flush($entity);
 		}
 	}
-	
-	/**
-	* @param mixed $entity
-	* @param FilterChain $filterChain
-	*/
-	public function filterDelete($entity, FilterChain $filterChain)
-	{
-		$queryBuilder = $this->entityManager
-			->getRepository(
-				is_object($entity)
-					? $entity::class
-					: $entity
-			)
-			->createQueryBuilder('t');
-
-		foreach ($filterChain->getFilters() as $filter)
-		{
-			$filter->addClause($queryBuilder);
-		}
-
-		$queryBuilder->delete();
-
-		return $queryBuilder->getQuery()->execute();
-	}
 }

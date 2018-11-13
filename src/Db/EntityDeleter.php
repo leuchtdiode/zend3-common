@@ -21,11 +21,35 @@ class EntityDeleter
 
 	/**
 	 * @param $entity
+	 * @param bool $flush
 	 * @throws Exception
 	 */
-	public function delete($entity)
+	public function delete($entity, $flush = true)
 	{
 		$this->entityManager->remove($entity);
-		$this->entityManager->flush($entity);
+		
+		if ($flush)
+		{
+			$this->entityManager->flush($entity);
+		}
+	}
+	
+	/**
+	* @param $entity
+	* @param FilterChain $filterChain
+	*/
+	public function filterDelete($entity, FilterChain $filterChain)
+	{
+		$queryBuilder = $this->entityManager->getRepository($entity::class)
+			->createQueryBuilder('t');
+
+		foreach ($filterChain->getFilters() as $filter)
+		{
+			$filter->addClause($queryBuilder);
+		}
+
+		$queryBuilder->delete();
+
+		return $queryBuilder->getQuery()->execute();
 	}
 }

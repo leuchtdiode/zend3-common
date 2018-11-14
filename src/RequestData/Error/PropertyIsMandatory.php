@@ -45,6 +45,6 @@ class PropertyIsMandatory extends Error
 	 */
 	public function getMessage()
 	{
-		return Translator::translate('Eigenschaft ' . $this->name . ' ist verpflichtend');
+		return Translator::translate($this->name . ' darf nicht leer sein');
 	}
 }

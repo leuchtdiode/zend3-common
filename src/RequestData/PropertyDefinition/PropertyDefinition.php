@@ -12,6 +12,11 @@ abstract class PropertyDefinition
 	protected $name;
 
 	/**
+	 * @var string|null
+	 */
+	protected $label;
+
+	/**
 	 * @var boolean
 	 */
 	protected $required;
@@ -56,6 +61,24 @@ abstract class PropertyDefinition
 	public function setName(string $name): PropertyDefinition
 	{
 		$this->name = $name;
+		return $this;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getLabel(): ?string
+	{
+		return $this->label;
+	}
+
+	/**
+	 * @param null|string $label
+	 * @return PropertyDefinition
+	 */
+	public function setLabel(?string $label): PropertyDefinition
+	{
+		$this->label = $label;
 		return $this;
 	}
 

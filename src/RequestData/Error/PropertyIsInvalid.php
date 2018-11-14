@@ -53,6 +53,6 @@ class PropertyIsInvalid extends Error
 	 */
 	public function getMessage()
 	{
-		return Translator::translate('Eigenschaft ' . $this->name . ' ist invalid (' . $this->message . ')');
+		return Translator::translate($this->name . ' ist ungültig (' . $this->message . ')');
 	}
 }

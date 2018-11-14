@@ -4,6 +4,7 @@ namespace Common\RequestData;
 use Common\RequestData\Error\PropertyIsInvalid;
 use Common\RequestData\Error\PropertyIsMandatory;
 use Common\RequestData\PropertyDefinition\PropertyDefinition;
+use Common\Translator;
 use Zend\Stdlib\RequestInterface;
 
 abstract class Data
@@ -61,7 +62,9 @@ abstract class Data
 			if (empty($rawValue) && $definition->isRequired())
 			{
 				$value->addError(
-					PropertyIsMandatory::create($definition->getName())
+					PropertyIsMandatory::create(
+						$this->getErrorLabel($definition)
+					)
 				);
 
 				continue;
@@ -74,7 +77,10 @@ abstract class Data
 				foreach ($validatorChain->getMessages() as $message)
 				{
 					$value->addError(
-						PropertyIsInvalid::create($definition->getName(), $message)
+						PropertyIsInvalid::create(
+							$this->getErrorLabel($definition),
+							$message
+						)
 					);
 				}
 
@@ -83,5 +89,16 @@ abstract class Data
 		}
 
 		return $values;
+	}
+
+	/**
+	 * @param PropertyDefinition $definition
+	 * @return string
+	 */
+	private function getErrorLabel(PropertyDefinition $definition)
+	{
+		return ($label = $definition->getLabel())
+			? Translator::translate($label)
+			: $definition->getName();
 	}
 }

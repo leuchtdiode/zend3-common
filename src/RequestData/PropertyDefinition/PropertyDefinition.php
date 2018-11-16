@@ -17,6 +17,11 @@ abstract class PropertyDefinition
 	protected $label;
 
 	/**
+	 * @var mixed|null
+	 */
+	protected $defaultValue;
+
+	/**
 	 * @var boolean
 	 */
 	protected $required;
@@ -79,6 +84,24 @@ abstract class PropertyDefinition
 	public function setLabel(?string $label): PropertyDefinition
 	{
 		$this->label = $label;
+		return $this;
+	}
+
+	/**
+	 * @return mixed|null
+	 */
+	public function getDefaultValue()
+	{
+		return $this->defaultValue;
+	}
+
+	/**
+	 * @param mixed|null $defaultValue
+	 * @return PropertyDefinition
+	 */
+	public function setDefaultValue($defaultValue): PropertyDefinition
+	{
+		$this->defaultValue = $defaultValue;
 		return $this;
 	}
 

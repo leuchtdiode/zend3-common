@@ -10,6 +10,14 @@ use Common\View\Helper\StaticResourceFactory;
 
 return [
 
+	'common' => [
+		'translator' => [
+			'global' => [
+				'enabled' => true,
+			],
+		],
+	],
+
 	'view_helpers' => [
 		'factories' => [
 			StaticResource::class => StaticResourceFactory::class,
@@ -25,7 +33,7 @@ return [
 		'factories' => [
 			ConfigActionPlugin::class => ConfigActionPluginFactory::class
 		],
-		'aliases' => [
+		'aliases'   => [
 			'config' => ConfigActionPlugin::class
 		],
 	],

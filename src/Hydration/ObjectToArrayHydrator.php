@@ -165,7 +165,7 @@ class ObjectToArrayHydrator
 				return true;
 			}
 
-			$cutPosition = StringUtil::startsWith('get', $method->getName()) ? 4 : 3;
+			$cutPosition = StringUtil::startsWith($method->getName(), 'get') ? 3 : 2;
 
 			// if method does not, check if property has doc comment
 			$propertyName = lcfirst(

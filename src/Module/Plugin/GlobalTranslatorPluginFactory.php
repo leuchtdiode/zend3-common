@@ -6,6 +6,12 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 class GlobalTranslatorPluginFactory implements FactoryInterface
 {
+	/**
+	 * @param ContainerInterface $container
+	 * @param $requestedName
+	 * @param array|null $options
+	 * @return GlobalTranslatorPlugin
+	 */
 	public function __invoke(
 		ContainerInterface $container,
 		$requestedName,
@@ -13,6 +19,7 @@ class GlobalTranslatorPluginFactory implements FactoryInterface
 	)
 	{
 		return new GlobalTranslatorPlugin(
+			$container->get('Config'),
 			$container->get('MvcTranslator')
 		);
 	}

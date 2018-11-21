@@ -53,9 +53,16 @@ abstract class Data
 		{
 			$rawValue = $this->data[$definition->getName()] ?? null;
 
-			if ($rawValue === null && !$definition->isRequired() && ($defaultValue = $definition->getDefaultValue()) !== null)
+			if ($rawValue === null && !$definition->isRequired())
 			{
-				$rawValue = $defaultValue;
+				if (($defaultValue = $definition->getDefaultValue()))
+				{
+					$rawValue = $defaultValue;
+				}
+				else
+				{
+					continue;
+				}
 			}
 
 			$value = new Value();

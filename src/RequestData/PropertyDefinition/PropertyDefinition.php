@@ -27,15 +27,29 @@ abstract class PropertyDefinition
 	protected $required;
 
 	/**
-	 * @var ValidatorChain
+	 * @var ValidatorChain|null
 	 */
 	protected $validatorChain;
+
+	/**
+	 * @var string|null
+	 */
+	protected $transformer;
 
 	/**
 	 */
 	public function __construct()
 	{
 		$this->validatorChain = new ValidatorChain();
+	}
+
+	/**
+	 * @param $value
+	 * @return bool
+	 */
+	public function valueIsEmpty($value)
+	{
+		return empty($value);
 	}
 
 	/**
@@ -124,10 +138,28 @@ abstract class PropertyDefinition
 	}
 
 	/**
-	 * @return ValidatorChain
+	 * @return null|ValidatorChain
 	 */
-	public function getValidatorChain(): ValidatorChain
+	public function getValidatorChain(): ?ValidatorChain
 	{
 		return $this->validatorChain;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getTransformer(): ?string
+	{
+		return $this->transformer;
+	}
+
+	/**
+	 * @param null|string $transformer
+	 * @return PropertyDefinition
+	 */
+	public function setTransformer(?string $transformer): PropertyDefinition
+	{
+		$this->transformer = $transformer;
+		return $this;
 	}
 }

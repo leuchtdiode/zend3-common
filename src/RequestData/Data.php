@@ -5,6 +5,8 @@ use Common\RequestData\Error\PropertyIsInvalid;
 use Common\RequestData\Error\PropertyIsMandatory;
 use Common\RequestData\PropertyDefinition\PropertyDefinition;
 use Common\Translator;
+use Exception;
+use Psr\Container\ContainerInterface;
 use Zend\Stdlib\RequestInterface;
 
 abstract class Data
@@ -15,9 +17,22 @@ abstract class Data
 	abstract protected function getDefinitions();
 
 	/**
+	 * @var ContainerInterface
+	 */
+	private $container;
+
+	/**
 	 * @var array
 	 */
 	private $data;
+
+	/**
+	 * @param ContainerInterface $container
+	 */
+	public function __construct(ContainerInterface $container)
+	{
+		$this->container = $container;
+	}
 
 	/**
 	 * @param RequestInterface $request
@@ -44,6 +59,7 @@ abstract class Data
 
 	/**
 	 * @return Values
+	 * @throws Exception
 	 */
 	public function getValues()
 	{
@@ -71,7 +87,7 @@ abstract class Data
 
 			$values->addValue($value);
 
-			if (empty($rawValue) && $definition->isRequired())
+			if ($definition->valueIsEmpty($rawValue) && $definition->isRequired())
 			{
 				$value->addError(
 					PropertyIsMandatory::create(
@@ -82,9 +98,37 @@ abstract class Data
 				continue;
 			}
 
+			$transformerClass = $definition->getTransformer();
+
+			if ($transformerClass)
+			{
+				$transformer = $this->container->get($transformerClass);
+
+				if (!$transformer)
+				{
+					throw new Exception('Transformer ' . $transformerClass . ' is not available');
+				}
+
+				try
+				{
+					$rawValue = $transformer->transform($rawValue);
+				}
+				catch (Exception $ex)
+				{
+					$value->addError(
+						PropertyIsInvalid::create(
+							$this->getErrorLabel($definition),
+							$ex->getMessage()
+						)
+					);
+
+					continue;
+				}
+			}
+
 			$validatorChain = $definition->getValidatorChain();
 
-			if (!$validatorChain->isValid($rawValue))
+			if ($validatorChain && !$validatorChain->isValid($rawValue))
 			{
 				foreach ($validatorChain->getMessages() as $message)
 				{

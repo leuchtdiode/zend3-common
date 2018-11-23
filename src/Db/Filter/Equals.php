@@ -43,6 +43,16 @@ abstract class Equals implements Filter
 	 */
 	public function addClause(QueryBuilder $queryBuilder)
 	{
+		if ($this->parameter === null)
+		{
+			$queryBuilder
+				->andWhere(
+					$queryBuilder->expr()->isNull($this->getField())
+				);
+
+			return;
+		}
+
 		$queryBuilder
 			->andWhere($this->getField() . ' = :' . $this->getParameterName())
 			->setParameter($this->getParameterName(), $this->parameter);

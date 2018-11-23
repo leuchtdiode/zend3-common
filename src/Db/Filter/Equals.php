@@ -39,6 +39,14 @@ abstract class Equals implements Filter
 	}
 
 	/**
+	 * @return Equals
+	 */
+	public static function isNull()
+	{
+		return new static(null);
+	}
+
+	/**
 	 * @param QueryBuilder $queryBuilder
 	 */
 	public function addClause(QueryBuilder $queryBuilder)

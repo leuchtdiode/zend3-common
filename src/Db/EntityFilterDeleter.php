@@ -21,6 +21,7 @@ class EntityFilterDeleter
 	/**
 	 * @param string $entityClass
 	 * @param FilterChain $filterChain
+	 * @return int
 	 */
 	public function filterDelete($entityClass, FilterChain $filterChain)
 	{
@@ -33,7 +34,7 @@ class EntityFilterDeleter
 			$filter->addClause($queryBuilder);
 		}
 
-		$queryBuilder
+		return $queryBuilder
 			->delete()
 			->getQuery()
 			->execute();

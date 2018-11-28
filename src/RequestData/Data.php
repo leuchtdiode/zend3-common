@@ -112,6 +112,8 @@ abstract class Data
 				try
 				{
 					$rawValue = $transformer->transform($rawValue);
+
+					$value->setValue($rawValue);
 				}
 				catch (Exception $ex)
 				{

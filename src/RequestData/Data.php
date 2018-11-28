@@ -71,7 +71,7 @@ abstract class Data
 
 			if ($rawValue === null && !$definition->isRequired())
 			{
-				if (($defaultValue = $definition->getDefaultValue()))
+				if (($defaultValue = $definition->getDefaultValue()) !== null)
 				{
 					$rawValue = $defaultValue;
 				}

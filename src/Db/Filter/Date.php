@@ -1,5 +1,5 @@
 <?php
-namespace Db\Common\Filter;
+namespace Common\Db\Filter;
 
 use DateTime;
 use Common\Db\Filter;

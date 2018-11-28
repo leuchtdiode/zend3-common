@@ -1,5 +1,5 @@
 <?php
-namespace Db\Common\Filter;
+namespace Common\Db\Filter;
 
 use Common\Db\Filter;
 use Doctrine\ORM\Query\Expr;
@@ -10,8 +10,10 @@ use RuntimeException;
 
 abstract class Generic implements Filter
 {
-	const EQ   = 'eq';
-	const LIKE = 'like';
+	const EQ          = 'eq';
+	const LIKE        = 'like';
+	const STARTS_WITH = 'starts_with';
+	const ENDS_WITH   = 'ends_with';
 
 	/**
 	 * @var boolean
@@ -83,6 +85,14 @@ abstract class Generic implements Filter
 
 				case self::LIKE:
 					$condition = $exp->like($column, $exp->literal("%{$value}%"));
+					break;
+
+				case self::STARTS_WITH:
+					$condition = $exp->like($column, $exp->literal("{$value}%"));
+					break;
+
+				case self::ENDS_WITH:
+					$condition = $exp->like($column, $exp->literal("%{$value}"));
 					break;
 
 				default:

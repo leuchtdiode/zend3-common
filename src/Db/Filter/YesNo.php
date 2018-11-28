@@ -1,5 +1,5 @@
 <?php
-namespace Db\Common\Filter;
+namespace Common\Db\Filter;
 
 use Common\Db\Filter;
 use Doctrine\ORM\QueryBuilder;

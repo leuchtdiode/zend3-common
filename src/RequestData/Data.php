@@ -19,7 +19,7 @@ abstract class Data
 	/**
 	 * @var ContainerInterface
 	 */
-	private $container;
+	protected $container;
 
 	/**
 	 * @var array

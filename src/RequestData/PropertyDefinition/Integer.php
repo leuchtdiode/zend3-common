@@ -14,6 +14,15 @@ class Integer extends PropertyDefinition
 	}
 
 	/**
+	 * @param $value
+	 * @return bool
+	 */
+	public function valueIsEmpty($value)
+	{
+		return $value === null;
+	}
+
+	/**
 	 */
 	public function __construct()
 	{

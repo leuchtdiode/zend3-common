@@ -54,6 +54,7 @@ abstract class PropertyDefinition
 
 	/**
 	 * @param ValidatorInterface $validator
+	 * @return PropertyDefinition
 	 */
 	public function addValidator(ValidatorInterface $validator)
 	{
@@ -63,6 +64,8 @@ abstract class PropertyDefinition
 		}
 
 		$this->validatorChain->attach($validator);
+
+		return $this;
 	}
 
 	/**

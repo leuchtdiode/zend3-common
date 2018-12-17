@@ -17,10 +17,10 @@ class Email extends PropertyDefinition
 	 */
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->addValidator(
 			new EmailAddress()
 		);
-
-		parent::__construct();
 	}
 }

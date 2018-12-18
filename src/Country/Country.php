@@ -1,14 +1,20 @@
 <?php
 namespace Common\Country;
 
-class Country
+use Common\Hydration\ArrayHydratable;
+
+class Country implements ArrayHydratable
 {
 	/**
+	 * @ObjectToArrayHydratorProperty
+	 *
 	 * @var string
 	 */
 	private $isoCode;
 
 	/**
+	 * @ObjectToArrayHydratorProperty
+	 *
 	 * @var string
 	 */
 	private $label;

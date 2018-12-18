@@ -27,6 +27,9 @@ class ProviderTest extends TestCase
 
 	/**
 	 * @dataProvider isoCodeSet
+	 * @param $locale
+	 * @param $isoCode
+	 * @param $expectedLabel
 	 * @throws Exception
 	 */
 	public function test_results($locale, $isoCode, $expectedLabel)

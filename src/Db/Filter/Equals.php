@@ -6,8 +6,17 @@ use Doctrine\ORM\QueryBuilder;
 
 abstract class Equals implements Filter
 {
+	const VALUE    = 'value';
+	const NULL     = 'null';
+	const NOT_NULL = 'notNull';
+
 	/**
-	 * @var mixed
+	 * @var string
+	 */
+	private $type;
+
+	/**
+	 * @var mixed|null
 	 */
 	private $parameter;
 
@@ -22,10 +31,12 @@ abstract class Equals implements Filter
 	abstract protected function getParameterName();
 
 	/**
+	 * @param $type
 	 * @param mixed $parameter
 	 */
-	private function __construct($parameter)
+	private function __construct($type, $parameter = null)
 	{
+		$this->type      = $type;
 		$this->parameter = $parameter;
 	}
 
@@ -35,7 +46,7 @@ abstract class Equals implements Filter
 	 */
 	public static function is($parameter)
 	{
-		return new static($parameter);
+		return new static(self::VALUE, $parameter);
 	}
 
 	/**
@@ -43,7 +54,15 @@ abstract class Equals implements Filter
 	 */
 	public static function isNull()
 	{
-		return new static(null);
+		return new static(self::NULL);
+	}
+
+	/**
+	 * @return Equals
+	 */
+	public static function isNotNull()
+	{
+		return new static(self::NOT_NULL);
 	}
 
 	/**
@@ -51,18 +70,37 @@ abstract class Equals implements Filter
 	 */
 	public function addClause(QueryBuilder $queryBuilder)
 	{
-		if ($this->parameter === null)
+		switch ($this->type)
 		{
-			$queryBuilder
-				->andWhere(
-					$queryBuilder->expr()->isNull($this->getField())
-				);
+			case self::VALUE:
 
-			return;
+				$queryBuilder
+					->andWhere($this->getField() . ' = :' . $this->getParameterName())
+					->setParameter($this->getParameterName(), $this->parameter);
+
+				break;
+
+			case self::NULL:
+
+				$queryBuilder
+					->andWhere(
+						$queryBuilder
+							->expr()
+							->isNull($this->getField())
+					);
+
+				break;
+
+			case self::NOT_NULL:
+
+				$queryBuilder
+					->andWhere(
+						$queryBuilder
+							->expr()
+							->isNotNull($this->getField())
+					);
+
+				break;
 		}
-
-		$queryBuilder
-			->andWhere($this->getField() . ' = :' . $this->getParameterName())
-			->setParameter($this->getParameterName(), $this->parameter);
 	}
 }

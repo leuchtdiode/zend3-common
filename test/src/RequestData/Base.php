@@ -33,7 +33,7 @@ abstract class Base extends CommonBase
 			->setRequest($this->getRequestData($requestData))
 			->getValues();
 
-		$this->assertEquals($values->hasErrors(), $hasErrors);
+		$this->assertEquals($hasErrors, $values->hasErrors());
 		$this->assertEquals($expectedValue, $values->get($this->getField())->getValue());
 	}
 

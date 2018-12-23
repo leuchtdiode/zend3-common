@@ -2,12 +2,12 @@
 namespace CommonTest\RequestData;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use CommonTest\Base as CommonBase;
 use Psr\Container\ContainerInterface;
 use Zend\Http\Request;
 use Zend\Stdlib\Parameters;
 
-abstract class Base extends TestCase
+abstract class Base extends CommonBase
 {
 	abstract protected function getField();
 
@@ -23,14 +23,14 @@ abstract class Base extends TestCase
 	{
 		$dataClass = $this->getDataClass();
 
-		$data = new $dataClass($this->getContainerMock());
+		$data = new $dataClass($this->getApplicationServiceLocator());
 
 		$requestData = [
 			$this->getField() => $value
 		];
 
 		$values = $data
-			->setRequest($this->getRequest($requestData))
+			->setRequest($this->getRequestData($requestData))
 			->getValues();
 
 		$this->assertEquals($values->hasErrors(), $hasErrors);
@@ -41,7 +41,7 @@ abstract class Base extends TestCase
 	 * @param $data
 	 * @return Request
 	 */
-	protected function getRequest($data)
+	protected function getRequestData($data)
 	{
 		$request = new Request();
 		$request->setQuery(

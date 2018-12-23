@@ -117,6 +117,8 @@ abstract class Data
 				}
 				catch (Exception $ex)
 				{
+					$value->setValue(null);
+
 					$value->addError(
 						PropertyIsInvalid::create(
 							$this->getErrorLabel($definition),

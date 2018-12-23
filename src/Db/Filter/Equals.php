@@ -75,7 +75,11 @@ abstract class Equals implements Filter
 			case self::VALUE:
 
 				$queryBuilder
-					->andWhere($this->getField() . ' = :' . $this->getParameterName())
+					->andWhere(
+						$queryBuilder
+							->expr()
+							->eq($this->getField(), ':' . $this->getParameterName())
+					)
 					->setParameter($this->getParameterName(), $this->parameter);
 
 				break;

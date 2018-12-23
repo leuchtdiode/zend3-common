@@ -28,13 +28,13 @@ class EmailRequiredTest extends Base
 	public function myDataSet()
 	{
 		return [
-			[ null, true ],
-			[ '', true ],
-			[ ' ', true ],
-			[ 'test', true ],
-			[ 'test@', true ],
-			[ 'test@test', true ],
-			[ 'test@test.at', false ],
+			[ null, true, null ],
+			[ '', true, null ],
+			[ ' ', true, null ],
+			[ 'test', true, null ],
+			[ 'test@', true, null ],
+			[ 'test@test', true, null ],
+			[ 'test@test.at', false, 'test@test.at' ],
 		];
 	}
 }

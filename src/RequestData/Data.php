@@ -69,6 +69,12 @@ abstract class Data
 		{
 			$rawValue = $this->data[$definition->getName()] ?? null;
 
+			$value = new Value();
+			$value->setName($definition->getName());
+			$value->setValue($rawValue);
+
+			$values->addValue($value);
+
 			if ($rawValue === null && !$definition->isRequired())
 			{
 				if (($defaultValue = $definition->getDefaultValue()) !== null)
@@ -80,12 +86,6 @@ abstract class Data
 					continue;
 				}
 			}
-
-			$value = new Value();
-			$value->setName($definition->getName());
-			$value->setValue($rawValue);
-
-			$values->addValue($value);
 
 			if ($definition->valueIsEmpty($rawValue) && $definition->isRequired())
 			{
@@ -132,6 +132,8 @@ abstract class Data
 
 			if ($validatorChain && !$validatorChain->isValid($rawValue))
 			{
+				$value->setValue(null);
+
 				foreach ($validatorChain->getMessages() as $message)
 				{
 					$value->addError(

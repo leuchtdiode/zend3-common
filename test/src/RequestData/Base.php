@@ -1,7 +1,6 @@
 <?php
 namespace CommonTest\RequestData;
 
-use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -18,9 +17,9 @@ abstract class Base extends TestCase
 	 * @dataProvider myDataSet
 	 * @param $value
 	 * @param $hasErrors
-	 * @throws Exception
+	 * @param $expectedValue
 	 */
-	public function test_values($value, $hasErrors)
+	public function test_values($value, $hasErrors, $expectedValue)
 	{
 		$dataClass = $this->getDataClass();
 
@@ -35,6 +34,7 @@ abstract class Base extends TestCase
 			->getValues();
 
 		$this->assertEquals($values->hasErrors(), $hasErrors);
+		$this->assertEquals($expectedValue, $values->get($this->getField())->getValue());
 	}
 
 	/**

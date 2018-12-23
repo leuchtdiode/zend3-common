@@ -28,13 +28,13 @@ class EmailOptionalTest extends Base
 	public function myDataSet()
 	{
 		return [
-			[ null, false ],
-			[ '', true ],
-			[ ' ', true ],
-			[ 'test', true ],
-			[ 'test@', true ],
-			[ 'test@test', true ],
-			[ 'test@test.at', false ],
+			[ null, false, null ],
+			[ '', true, null ],
+			[ ' ', true, null ],
+			[ 'test', true, null ],
+			[ 'test@', true, null ],
+			[ 'test@test', true, null ],
+			[ 'test@test.at', false, 'test@test.at' ],
 		];
 	}
 }

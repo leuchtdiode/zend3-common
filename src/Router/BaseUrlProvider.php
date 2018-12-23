@@ -20,6 +20,7 @@ class BaseUrlProvider
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 */
 	public function get()
 	{

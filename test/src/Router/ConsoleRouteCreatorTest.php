@@ -6,7 +6,7 @@ use CommonTest\Base;
 
 class ConsoleRouteCreatorTest extends Base
 {
-	public function test_route()
+	public function test_route_creation()
 	{
 		$this->assertEquals(
 			[

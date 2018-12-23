@@ -4,7 +4,7 @@ namespace CommonTest\Util;
 use Common\Util\StringUtil;
 use CommonTest\Base;
 
-class StringUtilTest extends Base
+class StringUtilContainsTest extends Base
 {
 	/**
 	 * @dataProvider containsSet

@@ -5,6 +5,8 @@ use Common\Action\Plugin\Config as ConfigActionPlugin;
 use Common\Action\Plugin\ConfigFactory as ConfigActionPluginFactory;
 use Common\View\Helper\AbsoluteUrl;
 use Common\View\Helper\AbsoluteUrlFactory;
+use Common\View\Helper\Config;
+use Common\View\Helper\ConfigFactory;
 use Common\View\Helper\StaticResource;
 use Common\View\Helper\StaticResourceFactory;
 
@@ -22,19 +24,21 @@ return [
 		'factories' => [
 			StaticResource::class => StaticResourceFactory::class,
 			AbsoluteUrl::class    => AbsoluteUrlFactory::class,
+			Config::class         => ConfigFactory::class,
 		],
 		'aliases'   => [
 			'staticResource' => StaticResource::class,
 			'absoluteUrl'    => AbsoluteUrl::class,
+			'config'         => Config::class,
 		],
 	],
 
 	'controller_plugins' => [
 		'factories' => [
-			ConfigActionPlugin::class => ConfigActionPluginFactory::class
+			ConfigActionPlugin::class => ConfigActionPluginFactory::class,
 		],
 		'aliases'   => [
-			'config' => ConfigActionPlugin::class
+			'config' => ConfigActionPlugin::class,
 		],
 	],
 

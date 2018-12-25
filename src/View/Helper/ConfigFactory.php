@@ -18,7 +18,7 @@ class ConfigFactory implements FactoryInterface
 		array $options = null
 	)
 	{
-		return new AbsoluteUrl(
+		return new Config(
 			$container->get('Config')
 		);
 	}

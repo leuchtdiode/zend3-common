@@ -24,8 +24,8 @@ class BaseUrlProvider
 	 */
 	public function get()
 	{
-		$config = $this->config['common']['url'];
-		
+		$config = $this->config['common']['url'] ?? null;
+
 		if (!$config)
 		{
 			throw new Exception('Could not find "url" config');

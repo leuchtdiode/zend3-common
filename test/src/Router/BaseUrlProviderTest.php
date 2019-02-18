@@ -5,7 +5,7 @@ use Common\Router\BaseUrlProvider;
 use Exception;
 use CommonTest\Base;
 
-class BaseUrlProviderTeste extends Base
+class BaseUrlProviderTest extends Base
 {
 	/**
 	 * @expectedException Exception
@@ -18,7 +18,7 @@ class BaseUrlProviderTeste extends Base
 	/**
 	 * @throws Exception
 	 */
-	public function test_bae_url()
+	public function test_base_url()
 	{
 		$config = [
 			'common' => [

@@ -25,6 +25,15 @@ abstract class AscOrDesc implements Order
 	abstract protected function getField();
 
 	/**
+	 * @param string $direction
+	 * @return AscOrDesc
+	 */
+	public static function withDirection($direction)
+	{
+		return new static($direction);
+	}
+
+	/**
 	 * @return AscOrDesc
 	 */
 	public static function asc()

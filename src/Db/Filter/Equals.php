@@ -9,6 +9,7 @@ abstract class Equals implements Filter
 	const VALUE    = 'value';
 	const NULL     = 'null';
 	const NOT_NULL = 'notNull';
+	const IN       = 'in';
 
 	/**
 	 * @var string
@@ -50,6 +51,15 @@ abstract class Equals implements Filter
 	}
 
 	/**
+	 * @param array $parameter
+	 * @return static
+	 */
+	public static function in(array $parameter)
+	{
+		return new static(self::IN, $parameter);
+	}
+
+	/**
 	 * @return Equals
 	 */
 	public static function isNull()
@@ -79,6 +89,18 @@ abstract class Equals implements Filter
 						$queryBuilder
 							->expr()
 							->eq($this->getField(), ':' . $this->getParameterName())
+					)
+					->setParameter($this->getParameterName(), $this->parameter);
+
+				break;
+
+			case self::IN:
+
+				$queryBuilder
+					->andWhere(
+						$queryBuilder
+							->expr()
+							->in($this->getField(), ':' . $this->getParameterName())
 					)
 					->setParameter($this->getParameterName(), $this->parameter);
 

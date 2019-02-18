@@ -41,6 +41,14 @@ abstract class AscOrDesc implements Order
 	}
 
 	/**
+	 * @return string
+	 */
+	protected function getDirection(): string
+	{
+		return $this->direction;
+	}
+
+	/**
 	 * @param QueryBuilder $queryBuilder
 	 */
 	public function addOrder(QueryBuilder $queryBuilder)

@@ -5,6 +5,7 @@ use Common\RequestData\Error\PropertyIsInvalid;
 use Common\RequestData\Error\PropertyIsMandatory;
 use Common\RequestData\PropertyDefinition\PropertyDefinition;
 use Common\Translator;
+use Common\Util\StringUtil;
 use Exception;
 use Psr\Container\ContainerInterface;
 use Zend\Stdlib\RequestInterface;
@@ -58,6 +59,16 @@ abstract class Data
 	}
 
 	/**
+	 * @param array $data
+	 * @return Data
+	 */
+	public function setData($data)
+	{
+		$this->data = $data;
+		return $this;
+	}
+
+	/**
 	 * @return Values
 	 * @throws Exception
 	 */
@@ -65,9 +76,24 @@ abstract class Data
 	{
 		$values = new Values();
 
-		foreach ($this->getDefinitions() as $definition)
+		$this->handleDefinitions(
+			$values,
+			$this->getDefinitions()
+		);
+
+		return $values;
+	}
+
+	/**
+	 * @param Values $values
+	 * @param PropertyDefinition[] $definitions
+	 * @throws Exception
+	 */
+	private function handleDefinitions(Values $values, array $definitions)
+	{
+		foreach ($definitions as $definition)
 		{
-			$rawValue = $this->data[$definition->getName()] ?? null;
+			$rawValue = $this->getRawValue($definition);
 
 			$value = new Value();
 			$value->setName($definition->getName());
@@ -149,8 +175,41 @@ abstract class Data
 				continue;
 			}
 		}
+	}
 
-		return $values;
+	/**
+	 * @param PropertyDefinition $definition
+	 * @return mixed|null
+	 */
+	private function getRawValue(PropertyDefinition $definition)
+	{
+		$name = $definition->getName();
+
+		if (StringUtil::contains($name, '.')) // nested property
+		{
+			$arrayIndexes = explode('.', $name);
+
+			$rawValue = $this->data[$arrayIndexes[0]] ?? null;
+
+			if ($rawValue === null)
+			{
+				return null;
+			}
+
+			foreach (array_slice($arrayIndexes, 1) as $arrIndex)
+			{
+				$rawValue = $rawValue[$arrIndex] ?? null;
+
+				if ($rawValue === null)
+				{
+					return null;
+				}
+			}
+
+			return $rawValue;
+		}
+
+		return $this->data[$name] ?? null;
 	}
 
 	/**

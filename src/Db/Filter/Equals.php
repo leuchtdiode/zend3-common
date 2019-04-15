@@ -6,10 +6,11 @@ use Doctrine\ORM\QueryBuilder;
 
 abstract class Equals implements Filter
 {
-	const VALUE    = 'value';
-	const NULL     = 'null';
-	const NOT_NULL = 'notNull';
-	const IN       = 'in';
+	const VALUE     = 'value';
+	const NOT_VALUE = 'notValue';
+	const NULL      = 'null';
+	const NOT_NULL  = 'notNull';
+	const IN        = 'in';
 
 	/**
 	 * @var string
@@ -51,6 +52,15 @@ abstract class Equals implements Filter
 	}
 
 	/**
+	 * @param mixed $parameter
+	 * @return static
+	 */
+	public static function isNot($parameter)
+	{
+		return new static(self::NOT_VALUE, $parameter);
+	}
+
+	/**
 	 * @param array $parameter
 	 * @return static
 	 */
@@ -89,6 +99,18 @@ abstract class Equals implements Filter
 						$queryBuilder
 							->expr()
 							->eq($this->getField(), ':' . $this->getParameterName())
+					)
+					->setParameter($this->getParameterName(), $this->parameter);
+
+				break;
+
+			case self::NOT_VALUE:
+
+				$queryBuilder
+					->andWhere(
+						$queryBuilder
+							->expr()
+							->neq($this->getField(), ':' . $this->getParameterName())
 					)
 					->setParameter($this->getParameterName(), $this->parameter);
 

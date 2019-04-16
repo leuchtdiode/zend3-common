@@ -49,6 +49,8 @@ class Validator extends AbstractValidator
 			// do nothing
 		}
 
+		$this->error(self::INVALID);
+
 		return false;
 	}
 }

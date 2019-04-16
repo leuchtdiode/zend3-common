@@ -42,5 +42,7 @@ class ValidatorTest extends Base
 		$this->assertFalse(
 			$this->validator->isValid('XX')
 		);
+
+		$this->assertCount(1, $this->validator->getMessages());
 	}
 }

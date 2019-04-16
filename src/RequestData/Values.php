@@ -36,6 +36,19 @@ class Values
 	}
 
 	/**
+	 * @param string $name
+	 * @return mixed|null
+	 */
+	public function getRawValue($name)
+	{
+		$value = $this->get($name);
+
+		return $value
+			? $value->getValue()
+			: null;
+	}
+
+	/**
 	 * @return Error[]
 	 */
 	public function getErrors()

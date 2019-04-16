@@ -2,10 +2,7 @@
 namespace CommonTest\Country;
 
 use Common\Country\Validator;
-use Common\Translator;
 use CommonTest\Base;
-use Zend\I18n\Translator\Translator as I18nTranslator;
-use Zend\Mvc\I18n\Translator as MvcTranslator;
 
 class ValidatorTest extends Base
 {
@@ -21,9 +18,7 @@ class ValidatorTest extends Base
 	{
 		parent::setUp();
 
-		$translator = new I18nTranslator();
-
-		Translator::setInstance(new MvcTranslator($translator));
+		$this->setDummyTranslator();
 
 		$this->validator = $this
 			->getApplicationServiceLocator()

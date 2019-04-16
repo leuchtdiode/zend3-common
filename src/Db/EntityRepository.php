@@ -45,10 +45,11 @@ class EntityRepository extends DoctrineEntityRepository
 
 	/**
 	 * @param FilterChain|null $filterChain
+	 * @param bool $distinct
 	 * @return int
 	 * @throws NonUniqueResultException
 	 */
-	public function countWithFilter(FilterChain $filterChain = null)
+	public function countWithFilter(FilterChain $filterChain = null, $distinct = false)
 	{
 		$identifiers = $this
 			->getClassMetadata()
@@ -56,7 +57,7 @@ class EntityRepository extends DoctrineEntityRepository
 
 		$queryBuilder = $this
 			->createQueryBuilder('t')
-			->select('COUNT(t.' . $identifiers[0] . ')');
+			->select('COUNT(' . ($distinct ? 'DISTINCT' : '') . ' t.' . $identifiers[0] . ')');
 
 		if ($filterChain)
 		{

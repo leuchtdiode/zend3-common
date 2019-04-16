@@ -3,6 +3,7 @@ namespace Common;
 
 use Common\Action\Plugin\Config as ConfigActionPlugin;
 use Common\Action\Plugin\ConfigFactory as ConfigActionPluginFactory;
+use Common\Router\HttpRouteCreator;
 use Common\View\Helper\AbsoluteUrl;
 use Common\View\Helper\AbsoluteUrlFactory;
 use Common\View\Helper\Config;
@@ -17,6 +18,19 @@ return [
 			'global' => [
 				'enabled' => true,
 			],
+		],
+	],
+
+	'router' => [
+		'routes' => [
+			'common' => HttpRouteCreator::create()
+				->setRoute('/common')
+				->setChildRoutes(
+					[
+						'country' => require 'routes/country.php'
+					]
+				)
+				->getConfig(),
 		],
 	],
 
@@ -45,6 +59,18 @@ return [
 	'service_manager' => [
 		'abstract_factories' => [
 			DefaultFactory::class,
+		],
+	],
+
+	'controllers' => [
+		'abstract_factories' => [
+			DefaultFactory::class,
+		],
+	],
+
+	'view_manager' => [
+		'strategies'   => [
+			'ViewJsonStrategy',
 		],
 	],
 ];

@@ -7,14 +7,11 @@ use Exception;
 class Provider
 {
 	/**
-	 * @param $isoCode
-	 * @return Country
+	 * @return Country[]
 	 * @throws Exception
 	 */
-	public function byIsoCode($isoCode)
+	public function all()
 	{
-		$isoCode = strtoupper($isoCode);
-
 		$filePath = sprintf(
 			'vendor/umpirsky/country-list/data/%s/country.php',
 			Translator::getLanguage()
@@ -25,13 +22,37 @@ class Provider
 			throw new Exception('Could not find country list file');
 		}
 
-		$list = require $filePath;
+		$countriesArray = require $filePath;
 
-		if (!array_key_exists($isoCode, $list))
+		$countries = [];
+
+		foreach ($countriesArray as $isoCode => $name)
 		{
-			throw new Exception('Could not find country with iso code ' . $isoCode);
+			$countries[] = new Country($isoCode, $name);
 		}
 
-		return new Country($isoCode, $list[$isoCode]);
+		return $countries;
+	}
+
+	/**
+	 * @param $isoCode
+	 * @return Country
+	 * @throws Exception
+	 */
+	public function byIsoCode($isoCode)
+	{
+		$isoCode = strtoupper($isoCode);
+
+		$countries = $this->all();
+
+		foreach ($countries as $country)
+		{
+			if ($country->getIsoCode() === $isoCode)
+			{
+				return $country;
+			}
+		}
+
+		throw new Exception('Could not find country with iso code ' . $isoCode);
 	}
 }

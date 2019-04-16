@@ -26,6 +26,19 @@ class ProviderTest extends TestCase
 	}
 
 	/**
+	 * @throws Exception
+	 */
+	public function test_all()
+	{
+		$all = $country = (new Provider())
+			->all();
+
+		$this->assertCount(255, $all);
+		$this->assertEquals('ZW', $all[count($all)-1]->getIsoCode());
+		$this->assertEquals('AF', reset($all)->getIsoCode());
+	}
+
+	/**
 	 * @dataProvider isoCodeSet
 	 * @param $locale
 	 * @param $isoCode

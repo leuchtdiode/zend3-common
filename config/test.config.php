@@ -4,6 +4,8 @@ return [
 	// Retrieve list of modules used in this application.
 	'modules' => [
 		'Zend\Router',
+		'Zend\Mvc\I18n',
+		'Zend\I18n',
 		'Common'
 	],
 

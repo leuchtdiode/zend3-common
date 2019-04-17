@@ -10,6 +10,8 @@ use RuntimeException;
 abstract class Date implements Filter
 {
 	const IN_DAYS = 'in_days';
+	const MAX     = 'max';
+	const MIN     = 'min';
 	const BEFORE  = 'before';
 	const AFTER   = 'after';
 	const MODULO  = 'modulo';
@@ -53,12 +55,34 @@ abstract class Date implements Filter
 		$date->modify(
 			sprintf(
 				'%s%d days',
-				$days < 0 ? '-' : '+',
+				$days < 0
+					? '-'
+					: '+',
 				abs($days)
 			)
 		);
 
 		return new static($date, self::IN_DAYS);
+	}
+
+	/**
+	 * @param DateTime $date
+	 *
+	 * @return static
+	 */
+	public static function min(DateTime $date)
+	{
+		return new static($date, self::MIN);
+	}
+
+	/**
+	 * @param DateTime $date
+	 *
+	 * @return static
+	 */
+	public static function max(DateTime $date)
+	{
+		return new static($date, self::MAX);
 	}
 
 	/**
@@ -92,7 +116,9 @@ abstract class Date implements Filter
 		$date->modify(
 			sprintf(
 				'%s%d days',
-				$days < 0 ? '-' : '+',
+				$days < 0
+					? '-'
+					: '+',
 				abs($days)
 			)
 		);
@@ -114,6 +140,26 @@ abstract class Date implements Filter
 					$exp->eq(
 						"DATE_FORMAT({$this->getColumn()}, '%Y-%m-%d')",
 						$exp->literal($this->value->format('Y-m-d'))
+					)
+				);
+
+				break;
+
+			case self::MIN:
+				$queryBuilder->andWhere(
+					$exp->gte(
+						$this->getColumn(),
+						$exp->literal($this->value->format('Y-m-d H:i:s'))
+					)
+				);
+
+				break;
+
+			case self::MAX:
+				$queryBuilder->andWhere(
+					$exp->lte(
+						$this->getColumn(),
+						$exp->literal($this->value->format('Y-m-d H:i:s'))
 					)
 				);
 

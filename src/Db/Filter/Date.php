@@ -9,6 +9,7 @@ use RuntimeException;
 
 abstract class Date implements Filter
 {
+	const IS      = 'is';
 	const IN_DAYS = 'in_days';
 	const MAX     = 'max';
 	const MIN     = 'min';
@@ -63,6 +64,16 @@ abstract class Date implements Filter
 		);
 
 		return new static($date, self::IN_DAYS);
+	}
+
+	/**
+	 * @param DateTime $date
+	 *
+	 * @return static
+	 */
+	public static function is(DateTime $date)
+	{
+		return new static($date, self::IS);
 	}
 
 	/**
@@ -135,6 +146,17 @@ abstract class Date implements Filter
 
 		switch ($this->mode)
 		{
+			case self::IS:
+
+				$queryBuilder->andWhere(
+					$exp->eq(
+						$this->getColumn(),
+						$exp->literal($this->value->format('Y-m-d H:i:s'))
+					)
+				);
+
+				break;
+
 			case self::IN_DAYS:
 				$queryBuilder->andWhere(
 					$exp->eq(

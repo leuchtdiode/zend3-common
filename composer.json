@@ -27,7 +27,8 @@
 		"umpirsky/country-list": "^2.0"
 	},
 	"suggest": {
-		"ext-openssl": "*"
+		"ext-openssl": "*",
+		"ext-calendar": "*"
 	},
 	"autoload": {
 		"psr-4": {

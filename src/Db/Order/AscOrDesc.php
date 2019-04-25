@@ -9,7 +9,7 @@ abstract class AscOrDesc implements Order
 	/**
 	 * @var string
 	 */
-	private $direction;
+	protected $direction;
 
 	/**
 	 * @param string $direction

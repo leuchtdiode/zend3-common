@@ -36,6 +36,21 @@ class ArrayCreator
 	 * @param string|null $key
 	 * @return ArrayCreator
 	 */
+	public function addIfNotNull($value, ?string $key = null)
+	{
+		if ($value === null)
+		{
+			return $this;
+		}
+
+		return $this->add($value, $key);
+	}
+
+	/**
+	 * @param mixed $value
+	 * @param string|null $key
+	 * @return ArrayCreator
+	 */
 	public function add($value, ?string $key = null)
 	{
 		if ($key !== null)

@@ -23,4 +23,24 @@ class ArrayCreatorTest extends Base
 			$arrayCreator->getArray()
 		);
 	}
+
+	public function test_creation_if_not_null()
+	{
+		$arrayCreator = ArrayCreator::create()
+			->addIfNotNull(null, 'null')
+			->addIfNotNull(0, 'null-as-int')
+			->addIfNotNull('', 'empty')
+			->add('test', 'test')
+			->addIfNotNull('test1', 'test1');
+
+		$this->assertEquals(
+			[
+				'null-as-int' => 0,
+				'empty'       => '',
+				'test'        => 'test',
+				'test1'       => 'test1',
+			],
+			$arrayCreator->getArray()
+		);
+	}
 }

@@ -52,6 +52,11 @@ abstract class Data
 			if (($content = $request->getContent()))
 			{
 				$this->data = json_decode($content, JSON_OBJECT_AS_ARRAY);
+
+				if (!$this->data) // try again POST data
+				{
+					parse_str($content, $this->data);
+				}
 			}
 		}
 
